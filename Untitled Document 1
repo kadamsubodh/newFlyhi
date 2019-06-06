@@ -1,0 +1,24 @@
+Card Number
+
+
+4DBC
+
+
+Exp Date (MM\YY)
+
+376934431142013
+
+
+3428
+
+
+05\22
+
+
+
+Number configure for OTP : 9867621459
+
+#Live Credentials
+$db_username = "lead_sharad";
+$db_password = "s_Q6W4&+d]JjWxh[";
+$dbname = "amex";
