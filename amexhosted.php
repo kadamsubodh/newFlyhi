@@ -1,4 +1,5 @@
 <?php
+echo "hi"; exit();
 session_start();
 $_SESSION['paymentType'] = $_POST['paymentType'];
 $_SESSION["FirstName"]= $_POST['FirstName'];

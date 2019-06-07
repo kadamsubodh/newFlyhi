@@ -145,7 +145,7 @@
                                      <input type="radio" name="getwayType" value="HDFC" checked>HDFC</input>
                                         <input type="radio" name="getwayType" value="AEXP">American Express</input>
 
-                                    <form id="americanExpress" action="amexhosted.php" method="POST">
+                                    <form id="americanExpress" action="amexhosted.php" method="POST" onsubmit="return validateAMEXForm()">
                                         <div class="info">
                                             <div class="row">
                                                 <div class="col-md-6 radio1">
@@ -158,7 +158,7 @@
                                         </div>
                                              <br>
                                         <div class="info">
-                                           <div class="errors"></div>
+                                           <div id="errors" style="display: none;"></div>
                                         </div>
 
                                         <div class="info">
@@ -182,21 +182,21 @@
                                                     <div class="dot3">:</div>
                                                     <div class="mandatory">*</div>
                                                 </label>
-                                                <input type="email" name="email1" class="validate[required,custom[email]]" id="email" maxlength="100" >
+                                                <input type="email" name="email1" class="validate[required,custom[email]]" id="email1" maxlength="100" >
                                             </div>
                                             <div class="info">
                                             <label for="phone" class="inputlabel">Mobile No.
                                                 <div class="dot3">:</div>
                                                 <div class="mandatory">*</div>
                                             </label>
-                                            <input type="text" name="phone1" class="validate[required]" id="phone" maxlength="12" >
+                                            <input type="text" name="phone1" class="validate[required]" id="phone1" maxlength="12" >
                                         </div>
                                             <div class="info">
                                                 <label for="Price" class="inputlabel">Currency
                                                     <div class="dot3">:</div>
                                                     <div class="mandatory">*</div>
                                                 </label>
-                                                <select name="currency1" id="currency" class="validate[required]">
+                                                <select name="currency1" id="currency1" class="validate[required]">
                                                     <option value=""><-- SELECT CURRENCY --></option>
                                                     <option value="INR">INR</option>
                                                     <option value="USD">USD</option>
@@ -210,7 +210,7 @@
                                                     <div class="dot3">:</div>
                                                     <div class="mandatory">*</div>
                                                 </label>
-                                                <input type="text" name="amount1" class="validate[required]" id="amount">
+                                                <input type="text" name="amount1" class="validate[required]" id="amount1">
                                             </div>
                                             <div class="info">
                                                 <label for="description1" class="inputlabel">Payment Description
@@ -219,7 +219,7 @@
                                                     <!-- (Please include PNR No / Ticket No / Invoice No / SOA No and Period in Payment Description) -->
                                                     (Please include PNR No / Ticket No / Invoice No / SOA No and Period / Or any other payment details in above field)
                                                 </label>
-                                                <textarea name="description1" class="validate[required]" id="description" ></textarea>
+                                                <textarea name="description1" class="validate[required]" id="description1" ></textarea>
                                             </div>
                                             <span>
                                                 <input type="submit" class="careersubmit" name="aexp" id="aexp" value="Proceed" />
@@ -463,49 +463,57 @@
                     }
                 });
             });
-            // function validateAMEXForm() {
-            //    var FirstName = $("#FirstName").val();
-            //    var LastName = $("#LastName").val();
-            //    var email = $("#email1").val();
-            //    var phone = $("#phone1").val();
-            //    var currency = $("#currency1").val();
-            //    var amount = $("#amount1").val();
-            //    var description = $("#description").val();
+            function validateAMEXForm() {
 
-            //    var errors = new array();
-            //    if(FirstName == "") {
-            //     errors.push("FirstName name is required");
-            //    }
-            //    if(LastName ==""){
-            //     errors.push("FirstName name is required");
-            //    }
-            //    if(email == "") {
-            //     errors.push("email name is required");
-            //    }
-            //    if(phone == "") {
-            //     errors.push("phone name is required");
-            //    }
-            //    if(currency == "") {
-            //     errors.push("currency name is required");
-            //    }
-            //    if(amount == "") {
-            //     errors.push("amount name is required");
-            //    }
-            //    if(description == "") {
-            //     errors.push("description name is required");
-            //    }
-            //    alert(errors.length);
-            //    var errorMessage = "";
-            //    if(errors.length != 0){
-            //     for(var i=0; i<errors.length; i++){
-            //         errorMessage = errorMessage + i + ")" + errors[i] + ".<br>";
-            //     }
-            //     $("#errorMessage").focus();
-            //     errorMessage.appendTo("#errors");
-            //     return false;
-            //    }
+               var FirstName = $("#FirstName").val();
+               var LastName = $("#LastName").val();
+               var email = $("#email1").val();
+               var phone = $("#phone1").val();
+               var currency = $("#currency1").val();
+               var amount = $("#amount1").val();
+               var description = $("#description1").val();
+               var errors=[];
+               if(FirstName == "") {
+                errors.push("Firstname is required");
+               }
+               if(LastName ==""){
+                errors.push("Last name is required");
+               }
+               if(email == "") {
+                errors.push("email is required");
+               }
+               if(phone == "") {
+                errors.push("phone number is required");
+               }
+               else if(!phone.match('[0-9]{10}')){
+                errors.push("please enter valid 10 digit mobile number.");
 
-            // }
+               }
+               if(currency == "") {
+                errors.push("currency is required");
+               }
+               if(amount == "") {
+                errors.push("amount  is required");
+               }
+               if(description == "") {
+                errors.push("description is required");
+               }
+                $("#errors").empty();
+               var errorMessage = "";
+               if(errors.length != 0){
+
+                for(var i=0; i<errors.length; i++){
+                    var srNo = i + 1;                  
+                    errorMessage = errorMessage + "<div class='alert-danger'>"+srNo + ")" + errors[i] + ".</div>";
+                }
+                 $("#errors").append(errorMessage);
+                
+                alert($("#errors").text());
+              
+                return false;
+               }
+
+            }
         </script>
     </body>
 </html>

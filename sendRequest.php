@@ -4,8 +4,6 @@
 session_start();
 if($_POST['bank'] == 'hdfc')
 {
-    echo "hdfc";
-    exit;
     $HASHING_METHOD = 'sha512'; // md5,sha1
     $ACTION_URL = "https://secure.ebs.in/pg/ma/payment/request/";
 
@@ -26,7 +24,7 @@ if($_POST['bank'] == 'hdfc')
     /**** Added By Pranali Start ***/
 
     $postData = $_POST;
-    echo '<pre>'; print_r($postData) ; exit;
+    // echo '<pre>'; print_r($postData) ; exit;
     /**** Added By Pranali End ****/
 
     ksort($postData);
@@ -45,86 +43,86 @@ if($_POST['bank'] == 'hdfc')
     <html>
     <!--onLoad="document.payment.submit();" -->
     <body>
-    <h3>Please wait, redirecting to process payment..</h3>
+        <h3>Please wait, redirecting to process payment..</h3>
 
-    <?php //echo "<pre>"; print_r($_POST); exit; ?>
-    <form action="<?php echo $ACTION_URL?>" name="payment" method="POST">
-        <?php
-        foreach($_POST as $key => $value) {
-    //echo $key ." => ". $value."<br>";
-            ?>
-            <input type="hidden" value="<?php echo $value;?>" name="<?php echo $key;?>"/>
+        <?php //echo "<pre>"; print_r($_POST); exit; ?>
+        <form action="<?php echo $ACTION_URL?>" name="payment" method="POST">
             <?php
-        }
-        ?>
-        <input type="hidden" value="<?php echo $secureHash; ?>" name="secure_hash"/>
-    </form>
+            foreach($_POST as $key => $value) {
+    //echo $key ." => ". $value."<br>";
+                ?>
+                <input type="hidden" value="<?php echo $value;?>" name="<?php echo $key;?>"/>
+                <?php
+            }
+            ?>
+            <input type="hidden" value="<?php echo $secureHash; ?>" name="secure_hash"/>
+        </form>
     </body>
     </html>
-<?php
-    }
-    else
-    {
-?>
+    <?php
+}
+else
+{
+    ?>
     <html>
-<head>
-<!-- INCLUDE SESSION.JS JAVASCRIPT LIBRARY -->
-<script src="https://gateway-japa.americanexpress.com/form/version/50/merchant/test8110291580/session.js"></script>
- <?php include('includes.php'); ?>
-<!-- APPLY CLICK-JACKING STYLING AND HIDE CONTENTS OF THE PAGE -->
-<style id="antiClickjack">body{display:none !important;}</style>
-</head>
-<body>
-<div id="Container">
-    <!--wrapper start-->
-    <div class="wrapper">
-        <!--header start-->
-        <?php include('header.php'); ?>
-        <!--header end-->
+    <head>
+        <!-- INCLUDE SESSION.JS JAVASCRIPT LIBRARY -->
+        <script src="https://gateway-japa.americanexpress.com/form/version/50/merchant/test8110291580/session.js"></script>
+        <?php include('includes.php'); ?>
+        <!-- APPLY CLICK-JACKING STYLING AND HIDE CONTENTS OF THE PAGE -->
+        <style id="antiClickjack">body{display:none !important;}</style>
+    </head>
+    <body>
+        <div id="Container">
+            <!--wrapper start-->
+            <div class="wrapper">
+                <!--header start-->
+                <?php include('header.php'); ?>
+                <!--header end-->
 
-        <!--content start-->
-        <div id="Content">
-            <div class="content-wrapper">
-            <!--column2 start-->
-                <div class="column2">
+                <!--content start-->
+                <div id="Content">
+                    <div class="content-wrapper">
+                        <!--column2 start-->
+                        <div class="column2">
 
-                    <div class="enquiryform">
-                         <h4>Please enter your payment details:</h4>
-                        <div style="padding: 5px 15px;;"> 
+                            <div class="enquiryform">
+                               <h4>Please enter your payment details:</h4>
+                               <div style="padding: 5px 15px;;"> 
 
-                        <!-- CREATE THE HTML FOR THE PAYMENT PAGE -->                          
-                            <form name='americanexpressform' action='americanExpressPayment.php' method="POST">
-                                Card Number:<br>
-                                <input type="text" id="card-number" name='card-number' class="input-field" value="345678901234564"><br>
-                                Expiry Month:<br>
-                                <input type="text" id="expiry-month" name='expiry-month' class="input-field" value="05"><br>
-                                Expiry Year:<br>
-                                <input type="text" id="expiry-year" name='expiry-year' class="input-field" value="21"><br>
-                                Security Code:<br>
-                                <input type="text" id="security-code" name='security-code' class="input-field" value="0773"><br>
-                                 <input type="hidden" name="amount" value="<?php echo $_POST['amount'];?>" id="amount">
-                                 <input type="hidden" name="currency" value="<?php echo $_POST['currency'];?>" id="amount">
-                                <button id="payButton" type="submit">Pay Now</button>
-                            </form>
+                                <!-- CREATE THE HTML FOR THE PAYMENT PAGE -->                          
+                                <form name='americanexpressform' action='americanExpressPayment.php' method="POST">
+                                    Card Number:<br>
+                                    <input type="text" id="card-number" name='card-number' class="input-field" value="345678901234564"><br>
+                                    Expiry Month:<br>
+                                    <input type="text" id="expiry-month" name='expiry-month' class="input-field" value="05"><br>
+                                    Expiry Year:<br>
+                                    <input type="text" id="expiry-year" name='expiry-year' class="input-field" value="21"><br>
+                                    Security Code:<br>
+                                    <input type="text" id="security-code" name='security-code' class="input-field" value="0773"><br>
+                                    <input type="hidden" name="amount" value="<?php echo $_POST['amount'];?>" id="amount">
+                                    <input type="hidden" name="currency" value="<?php echo $_POST['currency'];?>" id="amount">
+                                    <button id="payButton" type="submit">Pay Now</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- JAVASCRIPT FRAME-BREAKER CODE TO PROVIDE PROTECTION AGAINST IFRAME CLICK-JACKING -->
-<script type="text/javascript">
-if (self === top) {
-    var antiClickjack = document.getElementById("antiClickjack");
-    antiClickjack.parentNode.removeChild(antiClickjack);
-} else {
-    top.location = self.location;
-}
+    <!-- JAVASCRIPT FRAME-BREAKER CODE TO PROVIDE PROTECTION AGAINST IFRAME CLICK-JACKING -->
+    <script type="text/javascript">
+        if (self === top) {
+            var antiClickjack = document.getElementById("antiClickjack");
+            antiClickjack.parentNode.removeChild(antiClickjack);
+        } else {
+            top.location = self.location;
+        }
 
-PaymentSession.configure({
-    fields: {
+        PaymentSession.configure({
+            fields: {
         // ATTACH HOSTED FIELDS TO YOUR PAYMENT PAGE FOR A CREDIT CARD
         card: {
             number: "#card-number",
@@ -144,18 +142,18 @@ PaymentSession.configure({
             if (response.status) {
                 if ("ok" == response.status) {
                     console.log("Session updated with data: " + response.session.id);
-  
+
                     //check if the security code was provided by the user
                     if (response.sourceOfFunds.provided.card.securityCode) {
                         console.log("Security code was provided.");
                     }
-  
+
                     //check if the user entered a Mastercard credit card
                     if (response.sourceOfFunds.provided.card.scheme == 'MASTERCARD') {
                         console.log("The user entered a Mastercard credit card.")
                     }
                 } else if ("fields_in_error" == response.status)  {
-  
+
                     console.log("Session update failed with field errors.");
                     if (response.errors.cardNumber) {
                         console.log("Card number invalid or missing.");
@@ -178,10 +176,10 @@ PaymentSession.configure({
                 console.log("Session update failed: " + response);
             }
         }
-      }
-  });
+    }
+});
 
-function pay() {
+        function pay() {
     // UPDATE THE SESSION WITH THE INPUT FROM HOSTED FIELDS
     PaymentSession.updateSessionFromForm('card');
 }
@@ -189,6 +187,6 @@ function pay() {
 </body>
 </html>
 <?php
-    exit;
-    }
+exit;
+}
 ?>

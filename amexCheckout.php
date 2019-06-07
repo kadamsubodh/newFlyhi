@@ -16,8 +16,8 @@ $amount = $_SESSION['amount'];
 $description = $_SESSION['description'];
 ?>
 <script src="https://gateway-japa.americanexpress.com/checkout/version/50/checkout.js"
-	data-error="errorCallback"
-	data-cancel="cancelCallback" data-complete="completeCallback">
+data-error="errorCallback"
+data-cancel="cancelCallback" data-complete="completeCallback">
 </script>
 
 <script type="text/javascript">
@@ -38,22 +38,22 @@ window.location.href = "https://www.facebook.com/";
 
 // This handles the response from Hosted Checkout and redirects to the appropriate endpoint
 function completeCallback(response) {
-resultIndicator = response;
-var result = (resultIndicator === "<?php echo $successIndicator; ?>") ? "SUCCESS" : "ERROR";
-// var counter = 0;
-// var myInterval = setInterval(function () {
-//   ++counter;
-// }, 4000);
-// if(counter == 5){
-// 	clearInterval(myInterval);
-	window.location.href = "amexGetOrderRequest.php";
-
-	// }
-
-
+	resultIndicator = response;
+	var result = (resultIndicator === "<?php echo $successIndicator; ?>") ? "SUCCESS" : "ERROR";
+	if(result == "SUCCESS")	{
+		window.location.href = "amexGetOrderRequest.php";
+	}
+	else {
+		errorCallback();
+	}
+	
 }
-var amount = <?php echo $amount;?>;
 
+var amount = <?php echo $amount;?>;
+var currency = "<?php echo $currency; ?>";
+if(currency == "USD"){
+	amount = amount * 100;
+}
 Checkout.configure({
 	merchant: 'test8110291580',
 	order: {
@@ -81,7 +81,7 @@ Checkout.configure({
 var paymentType = "<?php echo $paymentType; ?>";
 if (paymentType == "lightbox") {
 	var result = Checkout.showLightbox();
-console.log(result);
+	console.log(result);
 }
 else {
 	var result = Checkout.showPaymentPage();
